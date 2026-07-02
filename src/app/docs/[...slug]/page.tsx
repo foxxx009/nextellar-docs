@@ -3,6 +3,8 @@ import { notFound } from 'next/navigation';
 import { Mdx } from '@/components/mdx-components';
 import Breadcrumb from '@/components/bread-crumb';
 import AutoToc from '@/components/auto-toc';
+import EditThisPage from '@/components/edit-this-page';
+import { format, parseISO } from 'date-fns';
 
 type tParams = Promise<{ slug: string[] }>;
 
@@ -51,14 +53,19 @@ const DocsPage = async ({ params }: { params: tParams }) => {
       <article className="overflow-auto">
         <div className="mb-8 text-center">
           <Breadcrumb path={doc.url} />
-          {/* {doc.date && (
-            <time dateTime={doc.date} className="mb-1 text-xs text-gray-600">
-              {format(parseISO(doc.date), 'LLLL d, yyyy')}
+          {doc.date && (
+            <time
+              dateTime={doc.date}
+              className="mt-2 block text-sm text-muted-foreground"
+            >
+              Last updated: {format(parseISO(doc.date), 'LLLL d, yyyy')}
             </time>
           )}
-          <h1 className="text-3xl font-bold">{doc.title}</h1> */}
         </div>
         <Mdx code={doc.body.code} />
+        <div className="mt-12 pt-6 border-t border-[var(--color-border)]">
+          <EditThisPage filePath={doc._raw.flattenedPath} />
+        </div>
       </article>
 
       <AutoToc />

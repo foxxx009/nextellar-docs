@@ -67,7 +67,7 @@ export const sidebarNav: SidebarSection[] = [
     defaultOpen: false,
     pages: [
       { title: 'Contributing', href: '/docs/guides/contributing' },
-      { title: 'Code of Conduct', href: '/docs/guides/code-of-conduct' },
+      { title: 'Pull Request Template', href: '/docs/guides/pull-request-template' },
       { title: 'Docs Style Guide', href: '/docs/guides/style-guide' },
       {
         title: 'PostCSS Configuration',
@@ -90,6 +90,10 @@ export const sidebarNav: SidebarSection[] = [
       {
         title: 'Hook Error Handling',
         href: '/docs/guides/hook-error-handling',
+      },
+      {
+        title: 'Custom Hook Authoring',
+        href: '/docs/guides/custom-hook-authoring-playbook',
       },
       { title: 'Editor Setup', href: '/docs/guides/editor-setup' },
       { title: 'Add a Docs Page', href: '/docs/guides/add-docs-page' },
@@ -141,6 +145,12 @@ export const sidebarNav: SidebarSection[] = [
       {
         title: 'Rate Limiting Horizon Requests',
         href: '/docs/guides/rate-limiting-horizon-requests',
+      },
+      {
+        title: 'Documentation Roadmap',
+        href: '/docs/guides/roadmap',
+        title: 'Security Policy',
+        href: '/docs/guides/security-policy',
       },
     ],
   },
@@ -210,7 +220,7 @@ export const sidebarNav: SidebarSection[] = [
     defaultOpen: false,
     pages: [
       { title: 'Contributing', href: '/docs/guides/contributing' },
-      { title: 'Code of Conduct', href: '/docs/guides/code-of-conduct' },
+      { title: 'Pull Request Template', href: '/docs/guides/pull-request-template' },
       { title: 'Docs Style Guide', href: '/docs/guides/style-guide' },
       {
         title: 'Versioned Docs Strategy',
@@ -220,6 +230,10 @@ export const sidebarNav: SidebarSection[] = [
       {
         title: 'Hook Error Handling',
         href: '/docs/guides/hook-error-handling',
+      },
+      {
+        title: 'Custom Hook Authoring',
+        href: '/docs/guides/custom-hook-authoring-playbook',
       },
       { title: 'Editor Setup', href: '/docs/guides/editor-setup' },
       { title: 'Testing (Vitest)', href: '/docs/guides/testing' },
@@ -245,6 +259,10 @@ export const sidebarNav: SidebarSection[] = [
       {
         title: 'Rate Limiting Horizon Requests',
         href: '/docs/guides/rate-limiting-horizon-requests',
+      },
+      {
+        title: 'Security Policy',
+        href: '/docs/guides/security-policy',
       },
     ],
   },
