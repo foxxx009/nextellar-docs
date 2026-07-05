@@ -92,8 +92,8 @@ export const sidebarNav: SidebarSection[] = [
         href: '/docs/guides/hook-error-handling',
       },
       {
-        title: 'Custom Hook Authoring',
-        href: '/docs/guides/custom-hook-authoring-playbook',
+        title: 'Wallet UX Patterns',
+        href: '/docs/guides/wallet-ux-patterns',
       },
       { title: 'Editor Setup', href: '/docs/guides/editor-setup' },
       { title: 'Add a Docs Page', href: '/docs/guides/add-docs-page' },
