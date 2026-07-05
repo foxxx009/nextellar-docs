@@ -67,6 +67,7 @@ export const sidebarNav: SidebarSection[] = [
     defaultOpen: false,
     pages: [
       { title: 'Contributing', href: '/docs/guides/contributing' },
+      { title: 'Pull Request Template', href: '/docs/guides/pull-request-template' },
       { title: 'Docs Style Guide', href: '/docs/guides/style-guide' },
       {
         title: 'PostCSS Configuration',
@@ -91,8 +92,8 @@ export const sidebarNav: SidebarSection[] = [
         href: '/docs/guides/hook-error-handling',
       },
       {
-        title: 'Custom Hook Authoring',
-        href: '/docs/guides/custom-hook-authoring-playbook',
+        title: 'Wallet UX Patterns',
+        href: '/docs/guides/wallet-ux-patterns',
       },
       { title: 'Editor Setup', href: '/docs/guides/editor-setup' },
       { title: 'Add a Docs Page', href: '/docs/guides/add-docs-page' },
@@ -146,8 +147,10 @@ export const sidebarNav: SidebarSection[] = [
         href: '/docs/guides/rate-limiting-horizon-requests',
       },
       {
-        title: 'Analytics Integration',
-        href: '/docs/guides/analytics-integration-guide',
+        title: 'Documentation Roadmap',
+        href: '/docs/guides/roadmap',
+        title: 'Security Policy',
+        href: '/docs/guides/security-policy',
       },
     ],
   },
@@ -217,6 +220,7 @@ export const sidebarNav: SidebarSection[] = [
     defaultOpen: false,
     pages: [
       { title: 'Contributing', href: '/docs/guides/contributing' },
+      { title: 'Pull Request Template', href: '/docs/guides/pull-request-template' },
       { title: 'Docs Style Guide', href: '/docs/guides/style-guide' },
       {
         title: 'Versioned Docs Strategy',
@@ -257,8 +261,8 @@ export const sidebarNav: SidebarSection[] = [
         href: '/docs/guides/rate-limiting-horizon-requests',
       },
       {
-        title: 'Analytics Integration',
-        href: '/docs/guides/analytics-integration-guide',
+        title: 'Security Policy',
+        href: '/docs/guides/security-policy',
       },
     ],
   },
