@@ -67,7 +67,10 @@ export const sidebarNav: SidebarSection[] = [
     defaultOpen: false,
     pages: [
       { title: 'Contributing', href: '/docs/guides/contributing' },
-      { title: 'Pull Request Template', href: '/docs/guides/pull-request-template' },
+      {
+        title: 'Pull Request Template',
+        href: '/docs/guides/pull-request-template',
+      },
       { title: 'Docs Style Guide', href: '/docs/guides/style-guide' },
       {
         title: 'PostCSS Configuration',
@@ -147,6 +150,19 @@ export const sidebarNav: SidebarSection[] = [
         href: '/docs/guides/rate-limiting-horizon-requests',
       },
       {
+        title: 'Streaming Payments from Horizon',
+        href: '/docs/guides/streaming-payments-horizon',
+      },
+      { title: 'Claimable Balances', href: '/docs/guides/claimable-balances' },
+      {
+        title: 'Time Locked Transactions',
+        href: '/docs/guides/time-locked-transactions',
+      },
+      {
+        title: 'Horizon vs Soroban RPC',
+        href: '/docs/guides/horizon-vs-soroban-rpc',
+      },
+      {
         title: 'Documentation Roadmap',
         href: '/docs/guides/roadmap',
         title: 'Security Policy',
@@ -220,7 +236,10 @@ export const sidebarNav: SidebarSection[] = [
     defaultOpen: false,
     pages: [
       { title: 'Contributing', href: '/docs/guides/contributing' },
-      { title: 'Pull Request Template', href: '/docs/guides/pull-request-template' },
+      {
+        title: 'Pull Request Template',
+        href: '/docs/guides/pull-request-template',
+      },
       { title: 'Docs Style Guide', href: '/docs/guides/style-guide' },
       {
         title: 'Versioned Docs Strategy',
@@ -259,6 +278,19 @@ export const sidebarNav: SidebarSection[] = [
       {
         title: 'Rate Limiting Horizon Requests',
         href: '/docs/guides/rate-limiting-horizon-requests',
+      },
+      {
+        title: 'Streaming Payments from Horizon',
+        href: '/docs/guides/streaming-payments-horizon',
+      },
+      { title: 'Claimable Balances', href: '/docs/guides/claimable-balances' },
+      {
+        title: 'Time Locked Transactions',
+        href: '/docs/guides/time-locked-transactions',
+      },
+      {
+        title: 'Horizon vs Soroban RPC',
+        href: '/docs/guides/horizon-vs-soroban-rpc',
       },
       {
         title: 'Security Policy',
