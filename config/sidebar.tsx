@@ -83,10 +83,22 @@ export const sidebarNav: SidebarSection[] = [
     pages: [
       { title: 'Deployment', href: '/docs/guides/deployment' },
       { title: 'Migration', href: '/docs/guides/migration' },
+      {
+        title: 'Transaction Lifecycle',
+        href: '/docs/guides/transaction-lifecycle',
+      },
       { title: 'Extending the CLI', href: '/docs/guides/extending-the-cli' },
       { title: 'Feature Flags', href: '/docs/guides/feature-flags' },
       { title: 'Testing', href: '/docs/guides/testing' },
       { title: 'Hook Error Handling', href: '/docs/guides/hook-error-handling' },
+      {
+        title: 'Testing Horizon & Soroban',
+        href: '/docs/guides/testing-horizon-soroban',
+      },
+      {
+        title: 'Cross-Contract Calls',
+        href: '/docs/guides/cross-contract-calls',
+      },
       {
         title: 'Optimizing Transaction Sizes',
         href: '/docs/guides/optimizing-transaction-sizes',
