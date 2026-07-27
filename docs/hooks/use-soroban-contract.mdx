@@ -1,6 +1,7 @@
 ---
 title: useSorobanContract
 description: Interact with Soroban smart contracts on Stellar
+date: 2026-06-02
 ---
 
 # useSorobanContract
@@ -17,7 +18,7 @@ The `useSorobanContract` hook provides a complete interface for interacting with
 
 ## Basic Usage
 
-````tsx
+`````tsx
 import { useSorobanContract } from '@/hooks/useSorobanContract';
 
 export default function ContractDemo() {
@@ -88,7 +89,7 @@ const result = await callFunction('transfer', [
   'GDEF456...', // to
   1000, // amount
 ]);
-````
+`````
 
 **Supported Argument Types:**
 

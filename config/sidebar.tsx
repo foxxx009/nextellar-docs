@@ -1,14 +1,13 @@
 /**
  * Sidebar Configuration
  *
- * Guides reorganised per issue #634 into four groups:
+ * Guides reorganised per issue #634 into three groups:
  *   (a) Product Guides     — Nextellar-specific how-to content
- *   (b) Stellar Education  — Stellar/Soroban protocol concepts
  *   (c) Docs Contributing  — docs-site infrastructure and process
  *
  * Off-topic files removed (category d):
- *   - cdn-cache-invalidation.mdx  (generic CDN/infra, no Nextellar specifics)
- *   - postcss-configuration.mdx   (generic PostCSS/Tailwind, no Nextellar specifics)
+ *   - cdn-cache-invalidation.mdx  (generic CDN/infra)
+ *   - postcss-configuration.mdx   (generic PostCSS/Tailwind)
  *
  * Validation: scripts/validate-sidebar.cjs
  * Future additions → run validation script first:
@@ -19,12 +18,10 @@ import {
   Component,
   Paintbrush,
   Rocket,
-  Wrench,
   Database,
   Zap,
   BookOpen,
   Plug,
-  Star,
   FileText,
 } from 'lucide-react';
 
@@ -90,7 +87,6 @@ export const sidebarNav: SidebarSection[] = [
       { title: 'Extending the CLI', href: '/docs/guides/extending-the-cli' },
       { title: 'Feature Flags', href: '/docs/guides/feature-flags' },
       { title: 'Testing', href: '/docs/guides/testing' },
-      { title: 'Hook Error Handling', href: '/docs/guides/hook-error-handling' },
       {
         title: 'Testing Horizon & Soroban',
         href: '/docs/guides/testing-horizon-soroban',
@@ -98,6 +94,15 @@ export const sidebarNav: SidebarSection[] = [
       {
         title: 'Cross-Contract Calls',
         href: '/docs/guides/cross-contract-calls',
+      },
+      { title: 'Hook Error Handling', href: '/docs/guides/hook-error-handling' },
+      {
+        title: 'Wallet UX Patterns',
+        href: '/docs/guides/wallet-ux-patterns',
+      },
+      {
+        title: 'Custom Hook Authoring',
+        href: '/docs/guides/custom-hook-authoring-playbook',
       },
       {
         title: 'Optimizing Transaction Sizes',
@@ -111,6 +116,7 @@ export const sidebarNav: SidebarSection[] = [
         title: 'Rate Limiting Horizon Requests',
         href: '/docs/guides/rate-limiting-horizon-requests',
       },
+      { title: 'Security Policy', href: '/docs/guides/security-policy' },
       { title: 'Glossary', href: '/docs/guides/glossary' },
     ],
   },
@@ -187,6 +193,10 @@ export const sidebarNav: SidebarSection[] = [
       {
         title: 'Contributing Checklist',
         href: '/docs/guides/contributing-checklist',
+      },
+      {
+        title: 'Pull Request Template',
+        href: '/docs/guides/pull-request-template',
       },
       { title: 'Style Guide', href: '/docs/guides/style-guide' },
       {
