@@ -1,15 +1,15 @@
 /**
- * Sidebar Configuration (#127 Cleanup Complete)
+ * Sidebar Configuration
  *
- * Components: 2/18 valid links (11% - minimal set)
- * Cleaned: 2026-04-29, removed 3 broken entries (60% of section)
+ * Guides reorganised per issue #634 into three groups:
+ *   (a) Product Guides     — Nextellar-specific how-to content
+ *   (c) Docs Contributing  — docs-site infrastructure and process
+ *
+ * Off-topic files removed (category d):
+ *   - cdn-cache-invalidation.mdx  (generic CDN/infra)
+ *   - postcss-configuration.mdx   (generic PostCSS/Tailwind)
+ *
  * Validation: scripts/validate-sidebar.cjs
- *
- * Broken links removed:
- *   - balance-card (no docs/components/balance-card.mdx)
- *   - payment-form (no docs/components/payment-form.mdx)
- *   - transaction-list (no docs/components/transaction-list.mdx)
- *
  * Future additions → run validation script first:
  *   node scripts/validate-sidebar.cjs
  */
@@ -18,11 +18,11 @@ import {
   Component,
   Paintbrush,
   Rocket,
-  Wrench,
   Database,
   Zap,
   BookOpen,
   Plug,
+  FileText,
 } from 'lucide-react';
 
 export type SidebarPage = {
@@ -39,6 +39,9 @@ export type SidebarSection = {
 };
 
 export const sidebarNav: SidebarSection[] = [
+  // -------------------------------------------------------------------------
+  // Getting Started
+  // -------------------------------------------------------------------------
   {
     title: 'Getting Started',
     icon: <Rocket className="h-5 w-5" />,
@@ -50,90 +53,57 @@ export const sidebarNav: SidebarSection[] = [
       { title: 'FAQ', href: '/docs/getting-started/faq' },
     ],
   },
+
+  // -------------------------------------------------------------------------
+  // CLI
+  // -------------------------------------------------------------------------
   {
     title: 'CLI',
     icon: <Zap className="h-5 w-5" />,
     defaultOpen: true,
     pages: [
+      { title: 'Overview', href: '/docs/cli/overview' },
       { title: 'Commands', href: '/docs/cli/commands' },
       { title: 'Cheat Sheet', href: '/docs/cli/cheat-sheet' },
       { title: 'Flags & Options', href: '/docs/cli/flags' },
       { title: 'Scaffolding Templates', href: '/docs/cli/templates' },
     ],
   },
+
+  // -------------------------------------------------------------------------
+  // (a) Product Guides — Nextellar-specific how-to content
+  // -------------------------------------------------------------------------
   {
-    title: 'Guides',
+    title: 'Product Guides',
     icon: <BookOpen className="h-5 w-5" />,
-    defaultOpen: false,
+    defaultOpen: true,
     pages: [
-      { title: 'Contributing', href: '/docs/guides/contributing' },
-      { title: 'Pull Request Template', href: '/docs/guides/pull-request-template' },
-      { title: 'Docs Style Guide', href: '/docs/guides/style-guide' },
+      { title: 'Deployment', href: '/docs/guides/deployment' },
+      { title: 'Migration', href: '/docs/guides/migration' },
       {
-        title: 'PostCSS Configuration',
-        href: '/docs/guides/postcss-configuration',
+        title: 'Transaction Lifecycle',
+        href: '/docs/guides/transaction-lifecycle',
       },
-      {
-        title: 'CDN and Cache Invalidation',
-        href: '/docs/guides/cdn-cache-invalidation',
-      },
-      {
-        title: 'Text Length and Readability',
-        href: '/docs/guides/text-length-readability',
-      },
+      { title: 'Extending the CLI', href: '/docs/guides/extending-the-cli' },
       { title: 'Feature Flags', href: '/docs/guides/feature-flags' },
+      { title: 'Testing', href: '/docs/guides/testing' },
       {
-        title: 'Versioned Docs Strategy',
-        href: '/docs/guides/versioned-docs-strategy',
+        title: 'Testing Horizon & Soroban',
+        href: '/docs/guides/testing-horizon-soroban',
       },
-      { title: 'Redirects Map', href: '/docs/guides/redirects-map' },
       {
-        title: 'Hook Error Handling',
-        href: '/docs/guides/hook-error-handling',
+        title: 'Cross-Contract Calls',
+        href: '/docs/guides/cross-contract-calls',
       },
+      { title: 'Hook Error Handling', href: '/docs/guides/hook-error-handling' },
       {
         title: 'Wallet UX Patterns',
         href: '/docs/guides/wallet-ux-patterns',
       },
-      { title: 'Editor Setup', href: '/docs/guides/editor-setup' },
-      { title: 'Add a Docs Page', href: '/docs/guides/add-docs-page' },
       {
-        title: 'Navigation Configuration',
-        href: '/docs/guides/navigation-configuration',
+        title: 'Custom Hook Authoring',
+        href: '/docs/guides/custom-hook-authoring-playbook',
       },
-      {
-        title: 'Release Notes Workflow',
-        href: '/docs/guides/release-notes-workflow',
-      },
-      { title: 'Extending the CLI', href: '/docs/guides/extending-the-cli' },
-      {
-        title: 'Performance Budget',
-        href: '/docs/guides/performance-budget-guide',
-      },
-      { title: 'Search Experience', href: '/docs/guides/search' },
-      {
-        title: 'Testing Docs Changes',
-        href: '/docs/guides/testing-docs-changes',
-      },
-      {
-        title: 'Diagram & Image Style',
-        href: '/docs/guides/diagram-image-style',
-      },
-      {
-        title: 'Offline Reading Export',
-        href: '/docs/guides/offline-reading',
-      },
-      {
-        title: 'Internationalization',
-        href: '/docs/guides/internationalization',
-      },
-      { title: 'Deployment', href: '/docs/guides/deployment' },
-      { title: 'Glossary', href: '/docs/guides/glossary' },
-      {
-        title: 'MDX Custom Components',
-        href: '/docs/guides/mdx-custom-components',
-      },
-      { title: 'Link Validation', href: '/docs/guides/link-validation' },
       {
         title: 'Optimizing Transaction Sizes',
         href: '/docs/guides/optimizing-transaction-sizes',
@@ -146,14 +116,14 @@ export const sidebarNav: SidebarSection[] = [
         title: 'Rate Limiting Horizon Requests',
         href: '/docs/guides/rate-limiting-horizon-requests',
       },
-      {
-        title: 'Documentation Roadmap',
-        href: '/docs/guides/roadmap',
-        title: 'Security Policy',
-        href: '/docs/guides/security-policy',
-      },
+      { title: 'Security Policy', href: '/docs/guides/security-policy' },
+      { title: 'Glossary', href: '/docs/guides/glossary' },
     ],
   },
+
+  // -------------------------------------------------------------------------
+  // SDK & Reference
+  // -------------------------------------------------------------------------
   {
     title: 'SDK & Reference',
     icon: <Database className="h-5 w-5" />,
@@ -165,6 +135,10 @@ export const sidebarNav: SidebarSection[] = [
       { title: 'Wallet Integration', href: '/docs/sdk/wallet-integration' },
     ],
   },
+
+  // -------------------------------------------------------------------------
+  // Hooks
+  // -------------------------------------------------------------------------
   {
     title: 'Hooks',
     icon: <Component className="h-5 w-5" />,
@@ -183,18 +157,10 @@ export const sidebarNav: SidebarSection[] = [
       { title: 'useSorobanEvents', href: '/docs/hooks/use-soroban-events' },
     ],
   },
-  {
-    title: 'CLI',
-    icon: <Zap className="h-5 w-5" />,
-    defaultOpen: false,
-    pages: [
-      { title: 'Overview', href: '/docs/cli/overview' },
-      { title: 'Commands', href: '/docs/cli/commands' },
-      { title: 'Cheat Sheet', href: '/docs/cli/cheat-sheet' },
-      { title: 'Flags & Options', href: '/docs/cli/flags' },
-      { title: 'Scaffolding Templates', href: '/docs/cli/templates' },
-    ],
-  },
+
+  // -------------------------------------------------------------------------
+  // Integrations
+  // -------------------------------------------------------------------------
   {
     title: 'Integrations',
     icon: <Plug className="h-5 w-5" />,
@@ -214,58 +180,92 @@ export const sidebarNav: SidebarSection[] = [
       { title: 'Testing (MSW)', href: '/docs/integrations/testing' },
     ],
   },
+
+  // -------------------------------------------------------------------------
+  // (c) Docs Contributing — docs-site infrastructure and process
+  // -------------------------------------------------------------------------
   {
-    title: 'Guides',
-    icon: <BookOpen className="h-5 w-5" />,
+    title: 'Docs Contributing',
+    icon: <FileText className="h-5 w-5" />,
     defaultOpen: false,
     pages: [
       { title: 'Contributing', href: '/docs/guides/contributing' },
-      { title: 'Pull Request Template', href: '/docs/guides/pull-request-template' },
-      { title: 'Docs Style Guide', href: '/docs/guides/style-guide' },
       {
-        title: 'Versioned Docs Strategy',
-        href: '/docs/guides/versioned-docs-strategy',
-      },
-      { title: 'Redirects Map', href: '/docs/guides/redirects-map' },
-      {
-        title: 'Hook Error Handling',
-        href: '/docs/guides/hook-error-handling',
+        title: 'Contributing Checklist',
+        href: '/docs/guides/contributing-checklist',
       },
       {
-        title: 'Custom Hook Authoring',
-        href: '/docs/guides/custom-hook-authoring-playbook',
+        title: 'Pull Request Template',
+        href: '/docs/guides/pull-request-template',
       },
-      { title: 'Editor Setup', href: '/docs/guides/editor-setup' },
-      { title: 'Testing (Vitest)', href: '/docs/guides/testing' },
+      { title: 'Style Guide', href: '/docs/guides/style-guide' },
       {
-        title: 'Internationalization',
-        href: '/docs/guides/internationalization',
+        title: 'Formatting Conventions',
+        href: '/docs/guides/formatting-conventions',
       },
-      { title: 'Deployment', href: '/docs/guides/deployment' },
-      { title: 'Glossary', href: '/docs/guides/glossary' },
+      {
+        title: 'Text Length & Readability',
+        href: '/docs/guides/text-length-readability',
+      },
+      { title: 'Add a Docs Page', href: '/docs/guides/add-docs-page' },
+      {
+        title: 'Configure the Sidebar',
+        href: '/docs/guides/configure-sidebar',
+      },
+      {
+        title: 'Navigation Configuration',
+        href: '/docs/guides/navigation-configuration',
+      },
       {
         title: 'MDX Custom Components',
         href: '/docs/guides/mdx-custom-components',
       },
       { title: 'Link Validation', href: '/docs/guides/link-validation' },
       {
-        title: 'Optimizing Transaction Sizes',
-        href: '/docs/guides/optimizing-transaction-sizes',
+        title: 'Testing Docs Changes',
+        href: '/docs/guides/testing-docs-changes',
+      },
+      { title: 'Editor Setup', href: '/docs/guides/editor-setup' },
+      {
+        title: 'Diagram & Image Style',
+        href: '/docs/guides/diagram-image-style',
       },
       {
-        title: 'Transaction Batching',
-        href: '/docs/guides/transaction-batching',
+        title: 'Screenshot Workflow',
+        href: '/docs/guides/screenshot-workflow',
       },
       {
-        title: 'Rate Limiting Horizon Requests',
-        href: '/docs/guides/rate-limiting-horizon-requests',
+        title: 'Docs Build Performance',
+        href: '/docs/guides/docs-build-performance-tips',
       },
       {
-        title: 'Security Policy',
-        href: '/docs/guides/security-policy',
+        title: 'Performance Budget',
+        href: '/docs/guides/performance-budget-guide',
+      },
+      {
+        title: 'Release Notes Workflow',
+        href: '/docs/guides/release-notes-workflow',
+      },
+      {
+        title: 'Versioned Docs Strategy',
+        href: '/docs/guides/versioned-docs-strategy',
+      },
+      { title: 'Redirects Map', href: '/docs/guides/redirects-map' },
+      { title: 'Search Experience', href: '/docs/guides/search' },
+      {
+        title: 'Offline Reading Export',
+        href: '/docs/guides/offline-reading',
+      },
+      {
+        title: 'Internationalization',
+        href: '/docs/guides/internationalization',
       },
     ],
   },
+
+  // -------------------------------------------------------------------------
+  // Components
+  // -------------------------------------------------------------------------
   {
     title: 'Components',
     icon: <Paintbrush className="h-5 w-5" />,
