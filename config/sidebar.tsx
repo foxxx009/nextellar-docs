@@ -78,6 +78,20 @@ export const sidebarNav: SidebarSection[] = [
     icon: <BookOpen className="h-5 w-5" />,
     defaultOpen: true,
     pages: [
+      { title: 'Contributing', href: '/docs/guides/contributing' },
+      {
+        title: 'Pull Request Template',
+        href: '/docs/guides/pull-request-template',
+      },
+      { title: 'Docs Style Guide', href: '/docs/guides/style-guide' },
+      {
+        title: 'PostCSS Configuration',
+        href: '/docs/guides/postcss-configuration',
+      },
+      {
+        title: 'CDN and Cache Invalidation',
+        href: '/docs/guides/cdn-cache-invalidation',
+      },
       { title: 'Deployment', href: '/docs/guides/deployment' },
       { title: 'Migration', href: '/docs/guides/migration' },
       {
@@ -115,6 +129,25 @@ export const sidebarNav: SidebarSection[] = [
       {
         title: 'Rate Limiting Horizon Requests',
         href: '/docs/guides/rate-limiting-horizon-requests',
+      },
+      {
+        title: 'Streaming Payments from Horizon',
+        href: '/docs/guides/streaming-payments-horizon',
+      },
+      { title: 'Claimable Balances', href: '/docs/guides/claimable-balances' },
+      {
+        title: 'Time Locked Transactions',
+        href: '/docs/guides/time-locked-transactions',
+      },
+      {
+        title: 'Horizon vs Soroban RPC',
+        href: '/docs/guides/horizon-vs-soroban-rpc',
+      },
+      {
+        title: 'Documentation Roadmap',
+        href: '/docs/guides/roadmap',
+        title: 'Security Policy',
+        href: '/docs/guides/security-policy',
       },
       { title: 'Security Policy', href: '/docs/guides/security-policy' },
       { title: 'Glossary', href: '/docs/guides/glossary' },
@@ -191,6 +224,11 @@ export const sidebarNav: SidebarSection[] = [
     pages: [
       { title: 'Contributing', href: '/docs/guides/contributing' },
       {
+        title: 'Pull Request Template',
+        href: '/docs/guides/pull-request-template',
+      },
+      { title: 'Docs Style Guide', href: '/docs/guides/style-guide' },
+      {
         title: 'Contributing Checklist',
         href: '/docs/guides/contributing-checklist',
       },
@@ -257,6 +295,21 @@ export const sidebarNav: SidebarSection[] = [
         href: '/docs/guides/offline-reading',
       },
       {
+        title: 'Streaming Payments from Horizon',
+        href: '/docs/guides/streaming-payments-horizon',
+      },
+      { title: 'Claimable Balances', href: '/docs/guides/claimable-balances' },
+      {
+        title: 'Time Locked Transactions',
+        href: '/docs/guides/time-locked-transactions',
+      },
+      {
+        title: 'Horizon vs Soroban RPC',
+        href: '/docs/guides/horizon-vs-soroban-rpc',
+      },
+      {
+        title: 'Security Policy',
+        href: '/docs/guides/security-policy',
         title: 'Internationalization',
         href: '/docs/guides/internationalization',
       },
