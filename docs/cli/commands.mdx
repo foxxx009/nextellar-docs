@@ -268,6 +268,73 @@ nextellar deploy
 nextellar deploy --dry-run
 ```
 
+### nextellar telemetry
+
+Manage anonymous CLI telemetry preferences.
+
+```bash
+nextellar telemetry <action>
+```
+
+**Arguments:**
+
+| Argument | Type   | Required | Description                          |
+| -------- | ------ | -------- | ------------------------------------- |
+| `action` | string | Yes      | One of `status`, `enable`, `disable` |
+
+**Examples:**
+
+```bash
+# Check current telemetry status and config file location
+nextellar telemetry status
+
+# Opt in to anonymous telemetry
+nextellar telemetry enable
+
+# Opt out of telemetry
+nextellar telemetry disable
+```
+
+**Output:**
+
+```bash
+nextellar telemetry status
+```
+
+```bash
+Telemetry is disabled.
+Config: /Users/you/.nextellar/config.json
+```
+
+`status`, `enable`, and `disable` all read from and write to the config file path printed above (`~/.nextellar/config.json`).
+
+**Disabling telemetry for a single invocation:**
+
+Pass `--no-telemetry` to the main scaffold command:
+
+```bash
+npx nextellar my-app --no-telemetry
+```
+
+**Disabling telemetry for an environment:**
+
+Set `NEXTELLAR_TELEMETRY_DISABLED` to force telemetry off, overriding both the stored config and any missing `--no-telemetry` flag:
+
+```bash
+export NEXTELLAR_TELEMETRY_DISABLED=1
+npx nextellar my-app
+```
+
+Accepted values are `1`, `true`, `yes`, or `on` (case-insensitive).
+
+**First-run notice:**
+
+The first time you scaffold a project without `--no-telemetry` or `NEXTELLAR_TELEMETRY_DISABLED` set, the CLI prints a one-time notice explaining that anonymous usage data is collected and how to opt out. The notice is shown once and then recorded in the config file so it isn't repeated on later runs.
+
+**What is sent:**
+
+Telemetry is opt-in — no events are sent until you run `nextellar telemetry enable`. Once enabled, a single anonymous `scaffold` event is sent to the `nextellar.dev` telemetry endpoint after each scaffold, containing the template, language, network, wallets, package manager, `--with-contracts` flag, success flag, CLI version, Node version, and OS. It never includes your project name, file paths, or secrets. See the CLI repository's [`docs/telemetry.md`](https://github.com/nextellarlabs/nextellar/blob/main/docs/telemetry.md) for the full payload shape and reliability guarantees.
+
 ## Project Creation Workflow
 
 When you run `nextellar my-app`, here's what happens:
