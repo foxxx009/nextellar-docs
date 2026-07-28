@@ -42,7 +42,29 @@ nextellar my-app \
   --horizon-url https://horizon.stellar.org \
   --wallets freighter,xbull \
   --skip-install
-```css
+```
+
+### Overwriting an existing directory
+
+By default, scaffolding into a directory that already exists fails without changing anything:
+
+```bash
+nextellar my-app
+# Error: Directory "my-app" already exists.
+```
+
+Pass `--force` to overwrite it instead:
+
+```bash
+nextellar my-app --force
+```
+
+<Note type="warning">
+  `--force` deletes the existing directory before scaffolding, and this cannot be undone. When
+  both stdin and stdout are a TTY and `--defaults` is not set, it prompts you to confirm the
+  overwrite first. With `--defaults`, in CI, or in any non-TTY shell, it skips the prompt and
+  deletes the directory immediately.
+</Note>
 
 ## Help Commands
 

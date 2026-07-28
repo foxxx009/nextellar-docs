@@ -50,6 +50,10 @@ export const sidebarNav: SidebarSection[] = [
       { title: 'Introduction', href: '/docs/getting-started/introduction' },
       { title: 'Installation', href: '/docs/getting-started/installation' },
       { title: 'Quick Start', href: '/docs/getting-started/quick-start' },
+      {
+        title: 'Contracts Quick Start',
+        href: '/docs/getting-started/contracts-quick-start',
+      },
       { title: 'FAQ', href: '/docs/getting-started/faq' },
     ],
   },

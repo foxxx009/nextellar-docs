@@ -23,6 +23,7 @@ Use the table below to find the exact flag name, alias, default, and a short des
 | Installation | `--package-manager <pm>` |       | Auto-detected                         | Choose `npm`, `yarn`, or `pnpm` for install.                                 |
 | Installation | `--install-timeout <ms>` |       | `1200000`                             | Set dependency install timeout in milliseconds.                              |
 | Automation   | `--defaults`             | `-d`  | `false`                               | Skip prompts and use default settings.                                       |
+| Scaffold     | `--force`                |       | `false`                               | Overwrite an existing project directory. See warning below.                  |
 | Telemetry    | `--no-telemetry`         |       | `false`                               | Disable telemetry for the current scaffold invocation.                       |
 | Feature Add  | `--list`                 | `-l`  | `false`                               | List available features for `nextellar add`.                                 |
 | Feature Add  | `--force`                | `-f`  | `false`                               | Force feature addition, overwriting existing files.                          |
@@ -37,6 +38,26 @@ Most options are used with the primary scaffold command:
 ```bash
 npx nextellar my-app --wallets freighter,xbull --package-manager pnpm --skip-install
 ```
+
+Without `--force`, scaffolding into a directory that already exists fails immediately:
+
+```bash
+npx nextellar my-app
+# Error: Directory "my-app" already exists.
+```
+
+Overwrite an existing directory with `--force`:
+
+```bash
+npx nextellar my-app --force
+```
+
+<Note type="warning">
+  `--force` deletes the existing directory before scaffolding — this cannot be undone. In an
+  interactive terminal (both stdin and stdout are a TTY) it asks you to confirm first, unless
+  `--defaults` is also set. In CI, in a non-TTY shell, or when `--defaults` is set, it deletes the
+  directory immediately with no confirmation prompt.
+</Note>
 
 Feature add options are used with `nextellar add`:
 
