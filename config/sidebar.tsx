@@ -106,10 +106,17 @@ export const sidebarNav: SidebarSection[] = [
         href: '/docs/guides/testing-horizon-soroban',
       },
       {
+        title: 'Testing Transactions on Testnet',
+        href: '/docs/guides/testing-transactions-testnet',
+      },
+      {
         title: 'Cross-Contract Calls',
         href: '/docs/guides/cross-contract-calls',
       },
-      { title: 'Hook Error Handling', href: '/docs/guides/hook-error-handling' },
+      {
+        title: 'Hook Error Handling',
+        href: '/docs/guides/hook-error-handling',
+      },
       {
         title: 'Wallet UX Patterns',
         href: '/docs/guides/wallet-ux-patterns',
@@ -142,6 +149,14 @@ export const sidebarNav: SidebarSection[] = [
       {
         title: 'Horizon vs Soroban RPC',
         href: '/docs/guides/horizon-vs-soroban-rpc',
+      },
+      {
+        title: 'Asset Authorization Flags',
+        href: '/docs/guides/asset-auth-flags',
+      },
+      {
+        title: 'Creating and Managing DEX Offers',
+        href: '/docs/guides/offer-creation-management',
       },
       {
         title: 'Documentation Roadmap',
