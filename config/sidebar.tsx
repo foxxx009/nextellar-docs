@@ -54,6 +54,7 @@ export const sidebarNav: SidebarSection[] = [
         title: 'Contracts Quick Start',
         href: '/docs/getting-started/contracts-quick-start',
       },
+      { title: 'Using JavaScript', href: '/docs/getting-started/javascript' },
       { title: 'FAQ', href: '/docs/getting-started/faq' },
     ],
   },
