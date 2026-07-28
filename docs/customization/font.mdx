@@ -12,14 +12,14 @@ The font used in this template is defined in `src/layout.tsx` using the `next/fo
 
 The font is imported and configured in `project-root/src/layout.tsx`:
 
-````tsx
+```tsx
 import { Geist } from 'next/font/google';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
   subsets: ['latin'],
 });
-```typescript
+```
 
 ## Applying the Font Globally
 
@@ -33,7 +33,7 @@ To apply the font globally, it is used in the `<body>` tag inside `project-root/
       text-sm
       font-regular tracking-wide antialiased`}
   >
-````
+```
 
 - `text-sm` is a Tailwind CSS utility class that controls the base font size.
 - You can change this to `xs`,`md`,`lg`, `xs`, `2xl`, or any other Tailwind font size to modify the default text size.
@@ -42,7 +42,7 @@ To apply the font globally, it is used in the `<body>` tag inside `project-root/
 
 If you need more control over typography settings, you can modify `tailwind.config.js` in the project root:
 
-````js
+```js
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -65,7 +65,7 @@ module.exports = {
   },
   plugins: [],
 };
-```typescript
+```
 
 - The `screens` object defines responsive breakpoints. You can modify them based on your requirements.
 - The default values provided are industry standards, but you can adjust them as needed.
@@ -80,7 +80,7 @@ const geistSans = Geist({
   weight: ['400', '700'],
   subsets: ['latin'],
 });
-```typescript
+```
 
 - `"400"` represents regular weight, while `"700"` is bold.
 - You can add more values like `"300"` (light) or `"900"` (extra bold) if required.
@@ -94,4 +94,3 @@ const geistSans = Geist({
 - You can modify font weight by adding an array of values in the font configuration.
 
 This guide helps you easily modify fonts and typography settings according to your design requirements.
-````
