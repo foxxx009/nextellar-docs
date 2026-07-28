@@ -40,6 +40,36 @@ nextellar my-app \
 nextellar my-app --defaults
 ```
 
+### Template Selection
+
+```bash
+# Scaffold with the minimal template
+nextellar my-app --template minimal
+
+# Scaffold with the DeFi template
+nextellar my-app --template defi
+
+# Scaffold a JavaScript project instead of TypeScript
+nextellar my-app --javascript
+```
+
+### Contracts
+
+```bash
+# Scaffold with Soroban smart contracts included
+nextellar my-app --with-contracts
+
+# Build the scaffolded Soroban contracts
+npm run contracts:build
+```
+
+### CI-Friendly Scaffold
+
+```bash
+# Non-interactive scaffold suitable for CI pipelines
+nextellar my-app --defaults --skip-install --no-telemetry
+```
+
 ## Development Commands
 
 ### Content & Build
@@ -116,6 +146,38 @@ nextellar add components
 
 # Add testing setup
 nextellar add testing
+```
+
+## Lifecycle Commands
+
+### Add & Diagnose
+
+```bash
+# Add the wallet connection feature
+nextellar add wallet
+
+# List all available features
+nextellar add --list
+
+# Run environment diagnostics as JSON (for CI)
+nextellar doctor --json
+```
+
+### Upgrade & Deploy
+
+```bash
+# Preview what an upgrade would change
+nextellar upgrade --dry-run
+
+# Validate a deployment without producing a bundle
+nextellar deploy --dry-run
+```
+
+### Telemetry
+
+```bash
+# Check telemetry status and config file path
+nextellar telemetry status
 ```
 
 ## Deployment
