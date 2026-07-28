@@ -1,7 +1,7 @@
 ---
 title: Horizon vs Soroban RPC — Choosing the Right API
 description: A comprehensive comparison of Horizon and Soroban RPC to help you decide which API a given workload should talk to, including hybrid usage patterns.
-date: 2026-07-26
+date: 2026-07-28
 ---
 
 # Horizon vs Soroban RPC — Choosing the Right API
@@ -30,6 +30,12 @@ Stellar apps typically talk to two different servers: **Horizon**, the classic h
 | Order book / DEX queries                          | ✅ First-class                                                                                            | ❌ Not supported                                                                             |
 | Fee model                                         | Flat base fee per operation                                                                               | Resource-based fees computed via simulation (CPU, memory, ledger I/O, plus classic base fee) |
 | Rate limits                                       | Per-IP request limits (see [Rate Limiting Horizon Requests](/docs/guides/rate-limiting-horizon-requests)) | Also rate-limited; typically lower quotas on public endpoints than Horizon                   |
+
+## Latency and pagination differences
+
+**Pagination:** Horizon's list endpoints (`payments()`, `transactions()`, `offers()`, etc.) use cursor-based pagination — each response includes `_links.next`/`_links.prev`, and the SDK exposes it as `.cursor()`, `.limit()`, and `.order()`. This makes infinite-scroll history and "load more" UIs straightforward. Soroban RPC has no equivalent list/cursor API: `getEvents` takes a starting ledger and returns a `cursor` you pass to the next call, but it's bounded by a short retention window (recent ledgers only), and reads like `getLedgerEntries` and `simulateTransaction` are single-shot lookups against the latest state with nothing to paginate.
+
+**Latency:** Horizon supports server-sent event streams (`.stream()`) for near-real-time updates as new ledgers close (Stellar ledgers close roughly every 5 seconds). Soroban RPC has no streaming — consumers must poll `getEvents` or `getTransaction`, so effective latency is bounded by your polling interval, not by network push. A typical pattern is polling `getTransaction` every 1–2 seconds until the status leaves `PENDING`, versus subscribing once to a Horizon stream and reacting as events arrive.
 
 ## Suggested patterns for common needs
 
