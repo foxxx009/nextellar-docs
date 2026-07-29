@@ -2,27 +2,27 @@
 title: Payment Application Example
 description: Build a complete Stellar payment application with Nextellar
 date: 2026-06-02
+tested_with_cli_version: '1.0.4'
+tested_with_node_version: '20.18.0'
 ---
 
 # Payment Application Example
 
 Learn how to build a complete payment application on Stellar using Nextellar. This example covers wallet connection, balance display, sending payments, and transaction history.
 
+**Tested with:** Nextellar CLI 1.0.4, Node.js 20.18.0
+
 ## What We'll Build
 
 A full-featured payment app with:
 
-- Multi-wallet connection (Freighter, Albedo, Lobstr, xBull, Hana).
-- Real-time balance display.
-- Send XLM and custom assets.
-- Transaction history with pagination.
-- QR code generation for receiving.
-- Transaction status tracking.
-- Error handling and validation.
-
-## Live Demo
-
-[View Live Demo](https://stellar-payment-demo.vercel.app) (Coming soon)
+- Multi-wallet connection (Freighter, Albedo, Lobstr, xBull, Hana)
+- Real-time balance display
+- Send XLM and custom assets
+- Transaction history with pagination
+- QR code generation for receiving
+- Transaction status tracking
+- Error handling and validation
 
 ## Prerequisites
 
@@ -33,37 +33,38 @@ A full-featured payment app with:
 ## Step 1: Create the Project
 
 ```bash
-npx nextellar stellar-payment-app
+npx nextellar stellar-payment-app --template default
 cd stellar-payment-app
 npm run dev
 ```
 
+The default template includes all the hooks and components you need. Open [http://localhost:3000](http://localhost:3000) to see the starter app.
+
 ## Step 2: Project Structure
+
+The default scaffold creates this structure:
 
 ```bash
 stellar-payment-app/
 src/
   app/
     layout.tsx
-    page.tsx                    # Main payment interface
+    page.tsx                    # Main application
   components/
-    WalletConnectButton.tsx     # Wallet connection
-    BalanceSummary.tsx          # Balance display
-    PaymentForm.tsx             # Payment form
-    TransactionHistoryList.tsx   # Transaction list
-    ReceiveQRCode.tsx           # QR code for receiving
+    WalletConnectButton.tsx     # Pre-built wallet UI
   hooks/
-    useStellarWallet.ts         # Wallet management
-    useStellarPayment.ts        # Payment handling
-    useTransactionHistory.ts    # Transaction queries
+    useStellarWallet.ts         # Wallet management (included)
+    useStellarPayment.ts        # Payment handling (included)
+    useTransactionHistory.ts    # Transaction queries (included)
+    useStellarBalances.ts       # Balance tracking (included)
   lib/
-      stellar-wallet-kit.ts       # Wallet configuration
+    stellar.ts                  # Stellar SDK config
 package.json
 ```
 
-## Step 3: Build the Main Interface
+## Step 3: Build the Payment Interface
 
-Create `src/app/page.tsx`:
+Replace the default `src/app/page.tsx` with:
 
 ```tsx
 'use client';
@@ -71,178 +72,9 @@ Create `src/app/page.tsx`:
 import { useState } from 'react';
 import { useStellarWallet } from '@/hooks/useStellarWallet';
 import WalletConnectButton from '@/components/WalletConnectButton';
-import BalanceSummary from '@/components/BalanceSummary';
-import PaymentForm from '@/components/PaymentForm';
-import TransactionHistoryList from '@/components/TransactionHistoryList';
-import ReceiveQRCode from '@/components/ReceiveQRCode';
 
 export default function PaymentApp() {
-  const { connected, publicKey, balances } = useStellarWallet();
-  const [activeTab, setActiveTab] = useState<'send' | 'receive' | 'history'>(
-    'send'
-  );
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
-      <div className="container mx-auto px-4 py-8">
-        {/* Header */}
-        <header className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
-            Stellar Payment App
-          </h1>
-          <p className="text-gray-600 dark:text-gray-300">
-            Send and receive XLM and custom assets on Stellar
-          </p>
-        </header>
-
-        {/* Wallet Connection */}
-        <div className="mb-8">
-          <WalletConnectButton />
-        </div>
-
-        {connected ? (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Left Column - Balance */}
-            <div className="lg:col-span-1">
-              <BalanceSummary balances={balances} publicKey={publicKey} />
-            </div>
-
-            {/* Right Column - Actions */}
-            <div className="lg:col-span-2">
-              {/* Tabs */}
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
-                <div className="flex gap-2 mb-6 border-b">
-                  {(['send', 'receive', 'history'] as const).map((tab) => (
-                    <button
-                      key={tab}
-                      onClick={() => setActiveTab(tab)}
-                      className={`px-4 py-2 font-medium capitalize transition-colors border-b-2 ${
-                        activeTab === tab
-                          ? 'border-blue-500 text-blue-600 dark:text-blue-400'
-                          : 'border-transparent text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
-                      }`}
-                    >
-                      {tab}
-                    </button>
-                  ))}
-                </div>
-
-                {/* Tab Content */}
-                {activeTab === 'send' && <PaymentForm />}
-                {activeTab === 'receive' && (
-                  <ReceiveQRCode publicKey={publicKey} />
-                )}
-                {activeTab === 'history' && (
-                  <TransactionHistoryList publicKey={publicKey} />
-                )}
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-12 text-center">
-            <p className="text-gray-600 dark:text-gray-300 text-lg">
-              Connect your wallet to get started
-            </p>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-```
-
-## Step 4: Balance Card Component
-
-Create `src/components/BalanceSummary.tsx`:
-
-```tsx
-'use client';
-
-import { Balance } from '@/hooks/useStellarWallet';
-import { RefreshCw } from 'lucide-react';
-
-interface BalanceSummaryProps {
-  balances: Balance[];
-  publicKey?: string;
-}
-
-export default function BalanceSummary({
-  balances,
-  publicKey,
-}: BalanceSummaryProps) {
-  const xlmBalance =
-    balances.find((b) => b.asset_type === 'native')?.balance || '0';
-  const assetBalances = balances.filter((b) => b.asset_type !== 'native');
-
-  return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-semibold">Your Balance</h2>
-        <button className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full">
-          <RefreshCw className="w-4 h-4" />
-        </button>
-      </div>
-
-      {/* XLM Balance */}
-      <div className="mb-6">
-        <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">XLM</p>
-        <p className="text-3xl font-bold text-gray-900 dark:text-white">
-          {parseFloat(xlmBalance).toLocaleString('en-US', {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 7,
-          })}
-        </p>
-      </div>
-
-      {/* Asset Balances */}
-      {assetBalances.length > 0 && (
-        <div>
-          <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
-            Assets
-          </h3>
-          <div className="space-y-2">
-            {assetBalances.map((balance, index) => (
-              <div
-                key={index}
-                className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg"
-              >
-                <span className="font-medium">{balance.asset_code}</span>
-                <span className="text-gray-600 dark:text-gray-400">
-                  {parseFloat(balance.balance).toLocaleString()}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Public Key */}
-      <div className="mt-6 pt-6 border-t">
-        <p className="text-xs text-gray-600 dark:text-gray-400 mb-1">
-          Your Address
-        </p>
-        <p className="text-xs font-mono break-all text-gray-900 dark:text-white">
-          {publicKey}
-        </p>
-      </div>
-    </div>
-  );
-}
-```
-
-## Step 5: Send Payment Form
-
-Create `src/components/PaymentForm.tsx`:
-
-```tsx
-'use client';
-
-import { useState } from 'react';
-import { useStellarWallet } from '@/hooks/useStellarWallet';
-import { Send } from 'lucide-react';
-
-export default function PaymentForm() {
-  const { sendPayment, balances } = useStellarWallet();
+  const { connected, publicKey, balances, sendPayment } = useStellarWallet();
   const [recipient, setRecipient] = useState('');
   const [amount, setAmount] = useState('');
   const [memo, setMemo] = useState('');
@@ -277,168 +109,262 @@ export default function PaymentForm() {
     }
   };
 
+  const xlmBalance =
+    balances.find((b) => b.asset_type === 'native')?.balance || '0';
+
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      {/* Recipient */}
-      <div>
-        <label className="block text-sm font-medium mb-2">
-          Recipient Address
-        </label>
-        <input
-          type="text"
-          value={recipient}
-          onChange={(e) => setRecipient(e.target.value)}
-          placeholder="GDEF456..."
-          className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-          required
-        />
-      </div>
+    <div className="min-h-screen p-8 bg-background">
+      <div className="max-w-2xl mx-auto">
+        <h1 className="text-4xl font-bold mb-8">Stellar Payment App</h1>
 
-      {/* Amount */}
-      <div>
-        <label className="block text-sm font-medium mb-2">Amount (XLM)</label>
-        <input
-          type="number"
-          step="0.0000001"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-          placeholder="10.5"
-          className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-          required
-        />
-      </div>
-
-      {/* Memo */}
-      <div>
-        <label className="block text-sm font-medium mb-2">
-          Memo (optional)
-        </label>
-        <input
-          type="text"
-          value={memo}
-          onChange={(e) => setMemo(e.target.value)}
-          placeholder="Payment for services"
-          maxLength={28}
-          className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-        />
-        <p className="text-xs text-gray-500 mt-1">Max 28 characters</p>
-      </div>
-
-      {/* Submit Button */}
-      <button
-        type="submit"
-        disabled={loading}
-        className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-      >
-        <Send className="w-4 h-4" />
-        {loading ? 'Sending...' : 'Send Payment'}
-      </button>
-
-      {/* Success Message */}
-      {txHash && (
-        <div className="p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
-          <p className="text-sm font-medium text-green-800 dark:text-green-200 mb-1">
-            Payment Successful!
-          </p>
-          <a
-            href={`https://stellar.expert/explorer/testnet/tx/${txHash}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm text-green-600 dark:text-green-400 hover:underline break-all"
-          >
-            View on Stellar Expert ↗
-          </a>
+        {/* Wallet Connection */}
+        <div className="mb-8">
+          <WalletConnectButton />
         </div>
-      )}
 
-      {/* Error Message */}
-      {error && (
-        <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-          <p className="text-sm text-red-800 dark:text-red-200">{error}</p>
-        </div>
-      )}
-    </form>
+        {connected && (
+          <>
+            {/* Account Info */}
+            <div className="bg-card border rounded-lg p-6 mb-8">
+              <h2 className="text-xl font-semibold mb-4">Account Info</h2>
+              <div className="space-y-2">
+                <div>
+                  <span className="text-sm text-muted-foreground">
+                    Public Key:
+                  </span>
+                  <p className="font-mono text-sm break-all">{publicKey}</p>
+                </div>
+                <div>
+                  <span className="text-sm text-muted-foreground">
+                    Balance:
+                  </span>
+                  <p className="text-2xl font-bold">{xlmBalance} XLM</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Payment Form */}
+            <div className="bg-card border rounded-lg p-6">
+              <h2 className="text-xl font-semibold mb-4">Send Payment</h2>
+              <form onSubmit={handleSubmit} className="space-y-4">
+                {/* Recipient */}
+                <div>
+                  <label className="block text-sm font-medium mb-2">
+                    Recipient Address
+                  </label>
+                  <input
+                    type="text"
+                    value={recipient}
+                    onChange={(e) => setRecipient(e.target.value)}
+                    placeholder="GDEF456..."
+                    className="w-full px-3 py-2 border rounded-md"
+                    required
+                  />
+                </div>
+
+                {/* Amount */}
+                <div>
+                  <label className="block text-sm font-medium mb-2">
+                    Amount (XLM)
+                  </label>
+                  <input
+                    type="number"
+                    step="0.0000001"
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
+                    placeholder="10.5"
+                    className="w-full px-3 py-2 border rounded-md"
+                    required
+                  />
+                </div>
+
+                {/* Memo */}
+                <div>
+                  <label className="block text-sm font-medium mb-2">
+                    Memo (optional)
+                  </label>
+                  <input
+                    type="text"
+                    value={memo}
+                    onChange={(e) => setMemo(e.target.value)}
+                    placeholder="Payment note"
+                    maxLength={28}
+                    className="w-full px-3 py-2 border rounded-md"
+                  />
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Max 28 characters
+                  </p>
+                </div>
+
+                {/* Submit Button */}
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full px-4 py-2 bg-primary text-primary-foreground rounded-md font-medium hover:opacity-90 disabled:opacity-50"
+                >
+                  {loading ? 'Sending...' : 'Send Payment'}
+                </button>
+              </form>
+
+              {/* Success Message */}
+              {txHash && (
+                <div className="mt-4 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-md">
+                  <p className="text-sm font-medium text-green-800 dark:text-green-200 mb-1">
+                    Payment Successful!
+                  </p>
+                  <a
+                    href={`https://stellar.expert/explorer/testnet/tx/${txHash}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-green-600 dark:text-green-400 hover:underline break-all"
+                  >
+                    View on Stellar Expert ↗
+                  </a>
+                </div>
+              )}
+
+              {/* Error Message */}
+              {error && (
+                <div className="mt-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md">
+                  <p className="text-sm text-red-800 dark:text-red-200">
+                    {error}
+                  </p>
+                </div>
+              )}
+            </div>
+          </>
+        )}
+
+        {!connected && (
+          <div className="bg-muted border rounded-lg p-8 text-center">
+            <p className="text-muted-foreground">
+              Connect your wallet to send payments
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
 ```
 
+## Step 4: Test Your App
+
+1. **Connect your wallet** (if not already connected)
+2. **Enter a recipient address** (you can send to yourself for testing)
+3. **Enter an amount** (e.g., `1`)
+4. **Optional: Add a memo**
+5. **Click "Send Payment"**
+6. **Approve the transaction** in your wallet
+
+Success! You've sent your first Stellar payment with Nextellar! 🎉
+
 ## Features Implemented
 
-### 1. Wallet Connection
+This example demonstrates:
 
-- Multi-wallet support (Freighter, Albedo, Lobstr, xBull, Hana).
-- Persistent connection via localStorage.
-- Auto-reconnect on page reload.
+- **Wallet Connection**: Connect to Freighter, Albedo, Lobstr, xBull, or Hana
+- **Balance Display**: Show XLM and custom asset balances
+- **Payment Transactions**: Send XLM with memo support
+- **Error Handling**: Graceful error messages and validation
+- **Transaction Confirmation**: Link to Stellar Expert for verification
+- **Responsive UI**: Works on desktop and mobile
 
-### 2. Balance Display
+## How It Works
 
-- Real-time XLM balance.
-- Custom asset balances.
-- Formatted number display.
-- Refresh capability.
+### 1. Wallet Integration
 
-### 3. Send Payments
-
-- XLM transfers.
-- Custom asset support (extensible).
-- Memo field.
-- Transaction validation.
-- Error handling.
-
-### 4. Transaction History
-
-- Paginated transaction list.
-- Transaction details.
-- Links to block explorer.
-- Real-time updates.
-
-### 5. Receive Payments
-
-- QR code generation.
-- Address display.
-- Copy to clipboard.
-
-## Deployment
-
-Deploy to Vercel:
-
-```bash
-npm run build
-vercel deploy
+```tsx
+const { connected, publicKey, balances, sendPayment } = useStellarWallet();
 ```
+
+The `useStellarWallet` hook provides:
+
+- `connected`: Whether a wallet is connected
+- `publicKey`: The user's Stellar address
+- `balances`: Array of account balances
+- `sendPayment()`: Function to submit transactions
+
+### 2. Sending Payments
+
+```tsx
+const result = await sendPayment({
+  to: recipient,
+  amount: amount,
+  asset: 'XLM',
+  memo: memo || undefined,
+});
+```
+
+The hook handles:
+
+- Building the transaction
+- Signing via the connected wallet
+- Submitting to the Stellar network
+- Returning the transaction hash
+
+### 3. Balance Display
+
+```tsx
+const xlmBalance =
+  balances.find((b) => b.asset_type === 'native')?.balance || '0';
+```
+
+Balances are automatically fetched and updated when the wallet connects.
 
 ## Next Steps
 
-<div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
-  <a
-    href="/examples/nft-marketplace"
-    className="block p-4 border rounded-lg hover:border-primary transition-colors"
-  >
-    <h4 className="font-semibold mb-2">NFT Marketplace</h4>
-    <span className="text-sm text-muted-foreground block">Build an NFT marketplace on Stellar</span>
-  </a>
+### Explore Related Hooks
 
-  <a
-    href="/guides/deployment"
-    className="block p-4 border rounded-lg hover:border-primary transition-colors"
-  >
-    <h4 className="font-semibold mb-2">Deployment Guide</h4>
-    <span className="text-sm text-muted-foreground block">Deploy your app to production</span>
-  </a>
-</div>
+- **[useStellarWallet](/docs/hooks/use-stellar-wallet)** - Wallet connection and payments
+- **[useStellarBalances](/docs/hooks/use-stellar-balances)** - Real-time balance tracking
+- **[useTransactionHistory](/docs/hooks/use-transaction-history)** - View transaction history
+- **[useTrustlines](/docs/hooks/use-trustlines)** - Manage custom asset trustlines
 
-## Source Code
+### Enhance Your App
 
-[Download Complete Source Code](https://github.com/nextellarlabs/nextellar-examples/tree/main/payment-app)
+- Add transaction history filtering and search
+- Implement custom asset sending
+- Add QR code for receiving
+- Create transaction receipts
+- Add multi-signature support
+
+### Deploy Your App
+
+```bash
+npm run build
+npm start
+```
+
+Or deploy to Vercel:
+
+```bash
+vercel deploy
+```
+
+## Troubleshooting
+
+### Wallet Connection Fails
+
+- Ensure Freighter wallet is installed and unlocked
+- Check that you're on the correct network (testnet)
+- Try refreshing the page
+
+### Payment Fails
+
+- Verify recipient address is valid (starts with 'G', 56 characters)
+- Ensure you have sufficient XLM balance (minimum 1 XLM reserve)
+- Check that amount is greater than 0
+
+### Transactions Not Appearing
+
+- Wait a few seconds for network confirmation (5-10 seconds typical)
+- Check [Stellar Expert](https://stellar.expert/explorer/testnet) for transaction status
+- Verify you're on the correct network (testnet vs mainnet)
 
 ## Related Documentation
 
 - [useStellarWallet Hook](/docs/hooks/use-stellar-wallet)
 - [useStellarPayment Hook](/docs/hooks/use-stellar-payment)
 - [useTransactionHistory Hook](/docs/hooks/use-transaction-history)
-
----
-
-<p className="text-sm text-center text-muted-foreground mt-8">
-  <a href="#"> Back to top</a>
-</p>
+- [Quick Start Guide](/docs/getting-started/quick-start)

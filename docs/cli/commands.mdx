@@ -8,15 +8,26 @@ date: 2026-06-02
 
 Complete reference for all Nextellar CLI commands and their usage.
 
+## Command Overview
+
+| Command               | Purpose                                                    |
+| --------------------- | ---------------------------------------------------------- |
+| `nextellar`           | Create a new Stellar dApp project                          |
+| `nextellar add`       | Add features to an existing Nextellar project              |
+| `nextellar doctor`    | Run environment diagnostics and system checks              |
+| `nextellar upgrade`   | Upgrade a project to the latest template files             |
+| `nextellar deploy`    | Validate and prepare project for production deployment     |
+| `nextellar telemetry` | Manage CLI telemetry preferences (status, enable, disable) |
+
 ## Main Command
 
 ### nextellar
 
 Create a new Stellar dApp project.
 
-````bash
+```bash
 nextellar <project-name> [options]
-```css
+```
 
 **Arguments:**
 
@@ -60,10 +71,10 @@ nextellar my-app --force
 ```
 
 <Note type="warning">
-  `--force` deletes the existing directory before scaffolding, and this cannot be undone. When
-  both stdin and stdout are a TTY and `--defaults` is not set, it prompts you to confirm the
-  overwrite first. With `--defaults`, in CI, or in any non-TTY shell, it skips the prompt and
-  deletes the directory immediately.
+  `--force` deletes the existing directory before scaffolding, and this cannot
+  be undone. When both stdin and stdout are a TTY and `--defaults` is not set,
+  it prompts you to confirm the overwrite first. With `--defaults`, in CI, or in
+  any non-TTY shell, it skips the prompt and deletes the directory immediately.
 </Note>
 
 ## Help Commands
@@ -86,6 +97,8 @@ Usage: nextellar <project-name> [options]
 Options:
   -t, --typescript         Generate a TypeScript project (default)
   -j, --javascript         Generate a JavaScript project
+  --template <name>        Use a specific template (default, minimal, defi)
+  --with-contracts         Include Soroban smart contract support
   --horizon-url <url>      Override default Horizon endpoint
   --soroban-url <url>      Override default Soroban RPC endpoint
   -w, --wallets <list>     Comma-separated list of wallet adapters
@@ -93,9 +106,11 @@ Options:
   --skip-install           Skip dependency installation
   --package-manager <pm>   Choose package manager (npm, yarn, pnpm)
   --install-timeout <ms>   Installation timeout in milliseconds
+  --force                  Overwrite existing directory (use with caution)
+  --no-telemetry           Disable telemetry for this invocation
   -v, --version            Show CLI version
   -h, --help               Show help text
-```css
+```
 
 ### --version, -v
 
@@ -110,7 +125,8 @@ nextellar -v
 **Output:**
 
 ```bash
-1.0.4
+nextellar/1.0.4 (linux-x64)
+node/20.18.0
 ```
 
 ## Feature Commands
@@ -125,18 +141,18 @@ nextellar add <feature-name> [options]
 
 **Arguments:**
 
-| Argument       | Type   | Required | Description                     |
-| -------------- | ------ | -------- | ------------------------------- |
-| `feature-name` | string | No       | Name of the feature to add      |
+| Argument       | Type   | Required | Description                |
+| -------------- | ------ | -------- | -------------------------- |
+| `feature-name` | string | No       | Name of the feature to add |
 
 **Options:**
 
-| Option                  | Alias  | Description                                                     |
-| ----------------------- | ------ | --------------------------------------------------------------- |
-| `--list`                | `-l`   | List all available features that can be added                   |
-| `--force`               | `-f`   | Force add feature, overwriting existing files without prompting |
-| `--skip-install`        |        | Skip automatic dependency installation after adding the feature |
-| `--package-manager <pm>`|        | Choose package manager (npm, yarn, pnpm) for installation      |
+| Option                   | Alias | Description                                                     |
+| ------------------------ | ----- | --------------------------------------------------------------- |
+| `--list`                 | `-l`  | List all available features that can be added                   |
+| `--force`                | `-f`  | Force add feature, overwriting existing files without prompting |
+| `--skip-install`         |       | Skip automatic dependency installation after adding the feature |
+| `--package-manager <pm>` |       | Choose package manager (npm, yarn, pnpm) for installation       |
 
 **Examples:**
 
@@ -161,25 +177,25 @@ nextellar doctor [options]
 
 **Options:**
 
-| Option   | Description                                      |
-| -------- | ------------------------------------------------ |
-| `--json` | Output results as JSON for CI integration        |
+| Option   | Description                               |
+| -------- | ----------------------------------------- |
+| `--json` | Output results as JSON for CI integration |
 
 **What it checks:**
 
-| Check          | Required | Description                                              |
-| -------------- | -------- | -------------------------------------------------------- |
-| Node.js        | Yes      | Version 20 or later                                      |
-| npm            | Yes      | Package manager bundled with Node.js                     |
-| yarn           | No       | Optional package manager                                 |
-| pnpm           | No       | Optional package manager                                 |
-| Git            | Yes      | Version control for project scaffolding                  |
-| Rust           | No       | Needed for Soroban contract development                  |
-| Stellar CLI    | No       | Needed for contract deployment and testing               |
-| wasm32 target  | No       | Rust target for compiling Soroban contracts              |
-| Horizon API    | Yes      | Reachability of the default testnet Horizon endpoint     |
-| Soroban RPC    | No       | Reachability of the default testnet Soroban RPC endpoint |
-| Free memory    | Yes      | At least 1 GB of available RAM                           |
+| Check         | Required | Description                                              |
+| ------------- | -------- | -------------------------------------------------------- |
+| Node.js       | Yes      | Version 20 or later                                      |
+| npm           | Yes      | Package manager bundled with Node.js                     |
+| yarn          | No       | Optional package manager                                 |
+| pnpm          | No       | Optional package manager                                 |
+| Git           | Yes      | Version control for project scaffolding                  |
+| Rust          | No       | Needed for Soroban contract development                  |
+| Stellar CLI   | No       | Needed for contract deployment and testing               |
+| wasm32 target | No       | Rust target for compiling Soroban contracts              |
+| Horizon API   | Yes      | Reachability of the default testnet Horizon endpoint     |
+| Soroban RPC   | No       | Reachability of the default testnet Soroban RPC endpoint |
+| Free memory   | Yes      | At least 1 GB of available RAM                           |
 
 **Examples:**
 
@@ -248,10 +264,10 @@ Run this command from the root of an existing Nextellar project. Use a dry run f
 
 **Options:**
 
-| Option      | Description                                           |
-| ----------- | ----------------------------------------------------- |
-| `--dry-run` | Show what would change without applying the upgrade   |
-| `--yes`     | Apply changes without prompting for confirmation      |
+| Option      | Description                                         |
+| ----------- | --------------------------------------------------- |
+| `--dry-run` | Show what would change without applying the upgrade |
+| `--yes`     | Apply changes without prompting for confirmation    |
 
 **Examples:**
 
@@ -276,9 +292,9 @@ nextellar deploy [options]
 
 **Options:**
 
-| Option       | Description                                                                 |
-| ------------ | --------------------------------------------------------------------------- |
-| `--dry-run`  | Validate configuration and build process without producing a deploy bundle |
+| Option      | Description                                                                |
+| ----------- | -------------------------------------------------------------------------- |
+| `--dry-run` | Validate configuration and build process without producing a deploy bundle |
 
 **Examples:**
 
@@ -301,7 +317,7 @@ nextellar telemetry <action>
 **Arguments:**
 
 | Argument | Type   | Required | Description                          |
-| -------- | ------ | -------- | ------------------------------------- |
+| -------- | ------ | -------- | ------------------------------------ |
 | `action` | string | Yes      | One of `status`, `enable`, `disable` |
 
 **Examples:**
@@ -473,11 +489,10 @@ function nxt { npx nextellar $args }
 
 # Usage
 nxt my-app
-```bash
+```
 
 ## Related Documentation
 
 - [CLI Options](/docs/cli/options) - Detailed option reference
 - [Configuration](/docs/cli/configuration) - Project configuration
 - [Troubleshooting](/docs/troubleshooting/installation-issues) - Common issues
-````
